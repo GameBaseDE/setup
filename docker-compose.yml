@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  gamebase-backend:
+    image: gamebaseproject/backend:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+    - "$MY_KUBECONFIG_PATH:/root/.kube/config:ro" #Modify or export MY_KUBECONFIG_PATH=...
+
+  gamebase-frontend:
+    image: gamebaseproject/frontend:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
+      #- API_ROOT_URL="https://myapi.com" This variable is optional. If it's unset, the api is assumed to be reachable by the frontend nginx with the hostname "gamebase-backend"
+    ports:
+      - 8080:80
